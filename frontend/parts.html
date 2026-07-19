@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+    (function () {
+        try {
+            if (localStorage.getItem("als-theme") === "dark") {
+                document.documentElement.setAttribute("data-theme", "dark");
+            }
+        } catch (e) {}
+    })();
+    </script>
+    <meta name="i18n-title" content="parts.docTitle">
+    <title>Parçalar - Mertory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="css/design.css" rel="stylesheet">
+</head>
+<body>
+
+    <a href="#main" class="skip-link" data-i18n="skip.link">İçeriğe geç</a>
+
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a href="index.html" class="brand">
+                <svg class="brand-mark" width="36" height="26" viewBox="0 0 36 26" aria-hidden="true">
+                    <ellipse class="brand-mark-oval" cx="18" cy="13" rx="16" ry="11"></ellipse>
+                    <text class="brand-mark-text" x="18" y="17" text-anchor="middle">M</text>
+                </svg>
+                Mertory
+            </a>
+            <nav class="site-nav" aria-label="Ana gezinme">
+                <a href="index.html" data-i18n="nav.home">Ana Sayfa</a>
+                <a href="parts.html" aria-current="page" data-i18n="nav.parts">Parçalar</a>
+                <a href="sales.html" data-i18n="nav.sales">Satışlar</a>
+                <a href="customers.html" data-i18n="nav.customers">Müşteriler</a>
+                <a href="reports.html" data-i18n="nav.reports">Raporlar</a>
+                <a href="settings.html" data-i18n="nav.settings">Ayarlar</a>
+            </nav>
+            <div class="lang-switch">
+                <button type="button" class="lang-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu" aria-label="Dil / Language / Sprache">
+                    <span class="lang-trigger-label">TR</span>
+                    <svg class="lang-trigger-caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
+                        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div id="langMenu" class="lang-menu" aria-label="Dil / Language / Sprache">
+                    <button type="button" class="lang-menu-item" data-lang-option="tr" aria-current="true">
+                        <span>Türkçe</span>
+                        <svg class="lang-menu-check" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                            <path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button type="button" class="lang-menu-item" data-lang-option="en">
+                        <span>English</span>
+                        <svg class="lang-menu-check" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                            <path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button type="button" class="lang-menu-item" data-lang-option="de">
+                        <span>Deutsch</span>
+                        <svg class="lang-menu-check" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                            <path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" class="page">
+        <div class="page-header">
+            <h1 class="page-title" data-i18n="parts.title">Parçalar</h1>
+            <button type="button" class="btn btn-primary" id="newPartBtn" data-i18n="parts.newBtn">+ Yeni Parça</button>
+        </div>
+
+        <div class="toolbar">
+            <div class="field search-field">
+                <label for="searchInput" class="visually-hidden" data-i18n="parts.searchLabel">Ara: parça adı, OE numarası, marka, araç marka/model</label>
+                <input type="search" id="searchInput" class="input" data-i18n-placeholder="parts.searchPlaceholder" placeholder="Ara: parça adı, OE no, marka, araç marka/model…">
+            </div>
+            <div class="field toolbar-filter">
+                <label for="vehicleTypeFilter" class="visually-hidden" data-i18n="parts.filter.vehicleTypeLabel">Araç tipine göre filtrele</label>
+                <select class="select" id="vehicleTypeFilter">
+                    <option value="" data-i18n="parts.filter.allVehicleTypes">Tüm Araç Tipleri</option>
+                    <option value="Otomobil" data-i18n="parts.vehicleType.car">Otomobil</option>
+                    <option value="Kamyon" data-i18n="parts.vehicleType.truck">Kamyon</option>
+                    <option value="Motosiklet" data-i18n="parts.vehicleType.motorcycle">Motosiklet</option>
+                    <option value="Otobüs" data-i18n="parts.vehicleType.bus">Otobüs</option>
+                    <option value="Tarım/İş Makinesi" data-i18n="parts.vehicleType.agri">Tarım/İş Makinesi</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="errorBanner" class="banner banner-danger" role="alert" hidden>
+            <span id="errorBannerText"></span>
+            <button type="button" class="btn btn-sm btn-ghost" id="errorRetryBtn" data-i18n="common.retry">Tekrar dene</button>
+        </div>
+
+        <div class="table-wrap">
+            <table class="table" id="partsTable">
+                <thead>
+                    <tr>
+                        <th data-i18n="parts.table.name">Parça Adı</th>
+                        <th class="code" data-i18n="parts.table.oeNumber">OE No</th>
+                        <th data-i18n="parts.table.brand">Marka</th>
+                        <th data-i18n="parts.table.vehicle">Araç</th>
+                        <th data-i18n="parts.table.condition">Durum</th>
+                        <th class="num" data-i18n="parts.table.stock">Stok</th>
+                        <th class="num" data-i18n="parts.table.buyPrice">Alış</th>
+                        <th class="num" data-i18n="parts.table.sellPrice">Satış</th>
+                        <th data-i18n="parts.table.stockStatus">Stok Durumu</th>
+                        <th class="actions"><span class="visually-hidden" data-i18n="parts.table.actions">İşlem</span></th>
+                    </tr>
+                </thead>
+                <tbody id="partsTableBody"></tbody>
+            </table>
+            <div id="emptyState" class="empty-state" hidden>
+                <p class="empty-state-title" id="emptyStateTitle">Henüz parça eklenmedi</p>
+                <p id="emptyStateBody">İlk parçanı ekleyerek stok takibine başla.</p>
+                <button type="button" class="btn btn-primary" id="emptyStateBtn">+ Yeni Parça</button>
+            </div>
+        </div>
+    </main>
+
+    <dialog class="dialog" id="partDialog" aria-labelledby="dialogTitle">
+        <form id="partForm" novalidate>
+            <div class="dialog-header">
+                <h2 id="dialogTitle">Yeni Parça</h2>
+                <button type="button" class="dialog-close" id="dialogCloseBtn" data-i18n-aria-label="common.close" aria-label="Kapat">✕</button>
+            </div>
+            <div class="dialog-body">
+                <input type="hidden" id="partId">
+
+                <div class="field">
+                    <label class="field-label" for="partName" data-i18n="parts.dialog.name">Parça Adı *</label>
+                    <input type="text" class="input" id="partName" required aria-describedby="partNameError">
+                    <p class="field-error" id="partNameError"></p>
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label class="field-label" for="partNumber" data-i18n="parts.dialog.oeNumber">OE Numarası</label>
+                        <input type="text" class="input" id="partNumber">
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="partCondition" data-i18n="parts.dialog.condition">Durum</label>
+                        <select class="select" id="partCondition">
+                            <option value="Yeni" data-i18n="parts.dialog.conditionNew">Yeni</option>
+                            <option value="Yenilenmiş" data-i18n="parts.dialog.conditionRefurbished">Yenilenmiş</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="field-label" for="partBrand" data-i18n="parts.dialog.brand">Marka</label>
+                    <input type="text" class="input" id="partBrand">
+                </div>
+
+                <div class="field">
+                    <label class="field-label" for="partVehicleType" data-i18n="parts.dialog.vehicleType">Araç Tipi</label>
+                    <select class="select" id="partVehicleType">
+                        <option value="Otomobil" data-i18n="parts.vehicleType.car">Otomobil</option>
+                        <option value="Kamyon" data-i18n="parts.vehicleType.truck">Kamyon</option>
+                        <option value="Motosiklet" data-i18n="parts.vehicleType.motorcycle">Motosiklet</option>
+                        <option value="Otobüs" data-i18n="parts.vehicleType.bus">Otobüs</option>
+                        <option value="Tarım/İş Makinesi" data-i18n="parts.vehicleType.agri">Tarım/İş Makinesi</option>
+                    </select>
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label class="field-label" for="partCarBrand" data-i18n="parts.dialog.vehicleBrand">Araç Marka</label>
+                        <input type="text" class="input" id="partCarBrand">
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="partCarModel" data-i18n="parts.dialog.vehicleModel">Araç Model</label>
+                        <input type="text" class="input" id="partCarModel">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="field-label" for="partChassisCode" data-i18n="parts.dialog.chassisCode">Şasi Kodu (opsiyonel)</label>
+                    <input type="text" class="input" id="partChassisCode">
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label class="field-label" for="partStock" data-i18n="parts.dialog.stock">Stok Adedi</label>
+                        <input type="number" class="input" id="partStock" value="0" min="0" step="1">
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="partBuyPrice" data-i18n="parts.dialog.buyPrice">Alış Fiyatı (€)</label>
+                        <input type="number" class="input" id="partBuyPrice" step="0.01" min="0">
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="partSellPrice" data-i18n="parts.dialog.sellPrice">Satış Fiyatı (€)</label>
+                        <input type="number" class="input" id="partSellPrice" step="0.01" min="0">
+                    </div>
+                </div>
+
+                <label class="checkbox-field">
+                    <input type="checkbox" id="partIsRemanufactured">
+                    <span class="checkbox-field-label" data-i18n="parts.dialog.isRemanufactured">Yenilenmiş parça (kor sistemi)</span>
+                </label>
+
+                <div class="field" id="coreChargeField" hidden>
+                    <label class="field-label" for="partCoreCharge" data-i18n="parts.dialog.coreCharge">Kor Bedeli (€)</label>
+                    <input type="number" class="input" id="partCoreCharge" step="0.01" min="0">
+                </div>
+            </div>
+            <div class="dialog-actions">
+                <button type="button" class="btn btn-ghost" id="dialogCancelBtn" data-i18n="common.cancel">İptal</button>
+                <button type="submit" class="btn btn-primary" id="dialogSaveBtn" data-i18n="common.save">Kaydet</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog class="dialog" id="confirmDialog" aria-labelledby="confirmTitle">
+        <div class="dialog-header">
+            <h2 id="confirmTitle" data-i18n="common.confirmTitle">Emin misiniz?</h2>
+        </div>
+        <div class="dialog-body" id="confirmMessage"></div>
+        <div class="dialog-actions">
+            <button type="button" class="btn btn-ghost" id="confirmCancelBtn" data-i18n="common.cancel">İptal</button>
+            <button type="button" class="btn btn-danger" id="confirmOkBtn" data-i18n="common.delete">Sil</button>
+        </div>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/parts.js"></script>
+</body>
+</html>

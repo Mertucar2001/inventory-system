@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+    (function () {
+        try {
+            if (localStorage.getItem("als-theme") === "dark") {
+                document.documentElement.setAttribute("data-theme", "dark");
+            }
+        } catch (e) {}
+    })();
+    </script>
+    <meta name="i18n-title" content="reports.docTitle">
+    <title>Raporlar - Mertory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="css/design.css" rel="stylesheet">
+</head>
+<body>
+
+    <a href="#main" class="skip-link" data-i18n="skip.link">İçeriğe geç</a>
+
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a href="index.html" class="brand">
+                <svg class="brand-mark" width="36" height="26" viewBox="0 0 36 26" aria-hidden="true">
+                    <ellipse class="brand-mark-oval" cx="18" cy="13" rx="16" ry="11"></ellipse>
+                    <text class="brand-mark-text" x="18" y="17" text-anchor="middle">M</text>
+                </svg>
+                Mertory
+            </a>
+            <nav class="site-nav" aria-label="Ana gezinme">
+                <a href="index.html" data-i18n="nav.home">Ana Sayfa</a>
+                <a href="parts.html" data-i18n="nav.parts">Parçalar</a>
+                <a href="sales.html" data-i18n="nav.sales">Satışlar</a>
+                <a href="customers.html" data-i18n="nav.customers">Müşteriler</a>
+                <a href="reports.html" aria-current="page" data-i18n="nav.reports">Raporlar</a>
+                <a href="settings.html" data-i18n="nav.settings">Ayarlar</a>
+            </nav>
+            <div class="lang-switch">
+                <button type="button" class="lang-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu" aria-label="Dil / Language / Sprache">
+                    <span class="lang-trigger-label">TR</span>
+                    <svg class="lang-trigger-caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
+                        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div id="langMenu" class="lang-menu" aria-label="Dil / Language / Sprache">
+                    <button type="button" class="lang-menu-item" data-lang-option="tr" aria-current="true">
+                        <span>Türkçe</span>
+                        <svg class="lang-menu-check" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                            <path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button type="button" class="lang-menu-item" data-lang-option="en">
+                        <span>English</span>
+                        <svg class="lang-menu-check" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                            <path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button type="button" class="lang-menu-item" data-lang-option="de">
+                        <span>Deutsch</span>
+                        <svg class="lang-menu-check" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                            <path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" class="page">
+        <div class="page-header">
+            <h1 class="page-title" data-i18n="reports.title">Raporlar</h1>
+        </div>
+
+        <div id="errorBanner" class="banner banner-danger" role="alert" hidden>
+            <span id="errorBannerText"></span>
+            <button type="button" class="btn btn-sm btn-ghost" id="errorRetryBtn" data-i18n="common.retry">Tekrar dene</button>
+        </div>
+
+        <div class="range-picker">
+            <div class="range-presets" role="group" aria-label="Tarih aralığı">
+                <button type="button" class="range-preset-btn" data-range="today" data-i18n="reports.range.today">Bugün</button>
+                <button type="button" class="range-preset-btn" data-range="week" data-i18n="reports.range.week">Bu Hafta</button>
+                <button type="button" class="range-preset-btn" data-range="month" data-i18n="reports.range.month">Bu Ay</button>
+                <button type="button" class="range-preset-btn" data-range="all" data-i18n="reports.range.all">Tüm Zamanlar</button>
+                <button type="button" class="range-preset-btn" data-range="custom" data-i18n="reports.range.custom">Özel</button>
+            </div>
+            <div class="custom-range" id="customRange" hidden>
+                <div class="field">
+                    <label class="field-label" for="rangeStart" data-i18n="reports.range.startLabel">Başlangıç</label>
+                    <input type="date" class="input" id="rangeStart">
+                </div>
+                <div class="field">
+                    <label class="field-label" for="rangeEnd" data-i18n="reports.range.endLabel">Bitiş</label>
+                    <input type="date" class="input" id="rangeEnd">
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-card-label" data-i18n="reports.stats.salesCount">Toplam Satış</div>
+                <div class="stat-card-value" id="statSalesCount">…</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-label" data-i18n="reports.stats.revenue">Toplam Ciro</div>
+                <div class="stat-card-value" id="statRevenue">…</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-label" data-i18n="reports.stats.cost">Toplam Maliyet</div>
+                <div class="stat-card-value" id="statCost">…</div>
+            </div>
+            <div class="stat-card" id="netProfitCard">
+                <div class="stat-card-label" data-i18n="reports.stats.netProfit">Net Kâr</div>
+                <div class="stat-card-value" id="statNetProfit">…</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-label" data-i18n="reports.stats.pendingCores">Bekleyen Kor</div>
+                <div class="stat-card-value" id="statPendingCount">…</div>
+                <div class="stat-card-sub" id="statPendingValue"></div>
+            </div>
+        </div>
+
+        <div class="report-columns">
+            <section class="report-panel">
+                <h2 class="report-panel-title" data-i18n="reports.topParts.title">En Çok Satan Parçalar</h2>
+                <p class="report-panel-desc" data-i18n="reports.topParts.desc">Seçilen aralıkta, adet bazında ilk 5</p>
+                <div class="report-list" id="topPartsList"></div>
+            </section>
+
+            <section class="report-panel">
+                <h2 class="report-panel-title" data-i18n="reports.lowStock.title">Düşük Stoklu Parçalar</h2>
+                <p class="report-panel-desc" data-i18n="reports.lowStock.desc">Dikkat gerektiren parçalar</p>
+                <div class="report-list" id="lowStockList"></div>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/reports.js"></script>
+</body>
+</html>

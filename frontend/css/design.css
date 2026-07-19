@@ -1,0 +1,1500 @@
+/* Mertory — design system
+   Tokens sourced from /DESIGN.md. Update both together. */
+
+:root {
+  /* Brand colors */
+  --color-primary: oklch(0.56 0.19 48);
+  --color-primary-deep: oklch(0.46 0.18 46);
+  --color-accent: oklch(0.30 0.11 258);
+  --color-accent-deep: oklch(0.22 0.09 258);
+  --color-success: oklch(0.40 0.13 145);
+  --color-danger: oklch(0.46 0.20 12);
+  --color-danger-ink: oklch(0.32 0.18 12);
+
+  /* Neutrals */
+  --color-bg: oklch(1 0 0);
+  --color-surface: oklch(0.904 0.007 258);
+  --color-border: oklch(0.85 0.009 258);
+  --color-ink: oklch(0.20 0.014 258);
+  --color-muted: oklch(0.42 0.012 258);
+  --color-on-fill: oklch(1 0 0);
+
+  /* Typography */
+  --font-sans: "IBM Plex Sans", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", Menlo, monospace;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Elevation */
+  --shadow-modal: 0 8px 24px rgba(20, 24, 30, 0.18);
+
+  /* z-index scale */
+  --z-sticky: 20;
+  --z-modal-backdrop: 30;
+  --z-modal: 40;
+  --z-toast: 50;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Optional dark variant — opt-in via a toggle on the Ayarlar page, never
+   the OS preference. Brand colors (primary/accent and their pairs) hold
+   constant across both themes; only neutrals invert. See DESIGN.md §2. */
+[data-theme="dark"] {
+  --color-bg: oklch(0.16 0.014 258);
+  --color-surface: oklch(0.28 0.018 258);
+  --color-border: oklch(0.36 0.018 258);
+  --color-ink: oklch(0.95 0.006 258);
+  --color-muted: oklch(0.72 0.014 258);
+  --color-danger-ink: oklch(0.82 0.13 18);
+  --shadow-modal: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- Reset & base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Same specificity as a single class rule (e.g. .btn { display: ... }),
+   so without !important the author rule can win and a [hidden] element
+   stays visible. Force it. */
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+table {
+  font-variant-numeric: tabular-nums;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* White-on-navy (not the header's own navy) so the link stays visible
+   when it lands on top of the sticky navy header. */
+.skip-link {
+  position: absolute;
+  left: var(--space-md);
+  top: -48px;
+  background: var(--color-on-fill);
+  color: var(--color-accent);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-modal);
+  font-weight: 600;
+  z-index: var(--z-toast);
+  transition: top 0.15s var(--ease-out-expo);
+}
+
+.skip-link:focus-visible {
+  top: var(--space-md);
+  outline-color: var(--color-accent);
+}
+
+/* ---------- Header / navigation ---------- */
+
+.site-header {
+  background: var(--color-accent);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+
+.site-header__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-sm) var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  text-decoration: none;
+  color: var(--color-on-fill);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  padding: var(--space-xs) 0;
+}
+
+.brand-mark-oval {
+  fill: var(--color-accent-deep);
+  stroke: var(--color-primary);
+  stroke-width: 2;
+}
+
+.brand-mark-text {
+  fill: var(--color-primary);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Navy-on-navy would make the default focus ring disappear; use the brand
+   orange for focus-visible inside the header instead. */
+.site-header :focus-visible {
+  outline-color: var(--color-primary);
+}
+
+.site-nav {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.site-nav a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-md);
+  border-radius: var(--radius-sm);
+  color: oklch(0.92 0.01 258);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: background-color 0.15s var(--ease-out-expo), color 0.15s var(--ease-out-expo);
+}
+
+.site-nav a:hover {
+  background: var(--color-accent-deep);
+  color: var(--color-on-fill);
+}
+
+.site-nav a[aria-current="page"] {
+  background: var(--color-primary);
+  color: var(--color-on-fill);
+}
+
+.site-nav a[aria-current="page"]:focus-visible {
+  outline-color: var(--color-on-fill);
+}
+
+/* ---------- Language switch (dropdown) ---------- */
+
+/* Plain relative/absolute dropdown, not the native Popover API — the
+   Popover API promotes .lang-menu to the top layer, which breaks
+   `position: absolute`'s containing-block chain (it stops resolving
+   against this wrapper and anchors to the viewport instead). CSS Anchor
+   Positioning is the spec-correct fix but Chrome/Edge 125+ only; this
+   plain version works everywhere with no fallback needed. */
+.lang-switch {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.lang-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 var(--space-sm) 0 var(--space-md);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent-deep);
+  color: var(--color-on-fill);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 0.15s var(--ease-out-expo);
+}
+
+.lang-trigger:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.lang-trigger-caret {
+  transition: transform 0.15s var(--ease-out-expo);
+}
+
+.lang-trigger[aria-expanded="true"] .lang-trigger-caret {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lang-trigger-caret {
+    transition: none;
+  }
+}
+
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  left: auto;
+  margin: 0;
+  padding: 4px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-modal);
+  flex-direction: column;
+  gap: 2px;
+  min-width: 180px;
+  display: none;
+  opacity: 0;
+  transform: translateY(-4px) scale(0.98);
+  transition: opacity 0.15s var(--ease-out-expo), transform 0.15s var(--ease-out-expo), display 0.15s allow-discrete;
+}
+
+.lang-menu.is-open {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* On narrow viewports the trigger can wrap to the left edge of the
+   header; a right-aligned menu would then overflow off-screen. Flip to
+   left alignment — see the overflow check in initLangSwitch(). */
+.lang-menu--align-left {
+  right: auto;
+  left: 0;
+}
+
+@starting-style {
+  .lang-menu.is-open {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lang-menu {
+    transition: none;
+  }
+}
+
+.lang-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  min-height: 44px;
+  padding: 0 var(--space-sm) 0 var(--space-md);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s var(--ease-out-expo);
+}
+
+.lang-menu-item:hover {
+  background: var(--color-surface);
+}
+
+.lang-menu-item[aria-current="true"] {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.lang-menu-check {
+  flex-shrink: 0;
+  color: var(--color-primary);
+  opacity: 0;
+}
+
+.lang-menu-item[aria-current="true"] .lang-menu-check {
+  opacity: 1;
+}
+
+/* ---------- Page shell ---------- */
+
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-lg);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.page-title {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.toolbar {
+  margin-bottom: var(--space-md);
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.toolbar .search-field {
+  flex: 1;
+  min-width: 200px;
+}
+
+.toolbar-filter {
+  width: auto;
+  min-width: 160px;
+}
+
+/* A checkbox filter inline in a toolbar (e.g. "pending cores only") —
+   compact, not the dialog .checkbox-field's full-width row. */
+.toolbar-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-height: 40px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.toolbar-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+/* ---------- Home list ---------- */
+
+.home-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.home-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  min-height: 96px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: border-color 0.15s var(--ease-out-expo), background-color 0.15s var(--ease-out-expo);
+}
+
+.home-row:hover {
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+}
+
+.home-row:active {
+  background: var(--color-surface);
+}
+
+.home-row-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.home-row-stat {
+  margin-top: var(--space-xs);
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+}
+
+.home-row-stat .figure {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.home-row-stat.is-attention .figure {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+.home-row-arrow {
+  flex-shrink: 0;
+  color: var(--color-muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: transform 0.15s var(--ease-out-expo);
+}
+
+.home-row:hover .home-row-arrow {
+  transform: translateX(4px);
+  color: var(--color-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-row-arrow {
+    transition: none;
+  }
+
+  .home-row:hover .home-row-arrow {
+    transform: none;
+  }
+}
+
+/* ---------- Settings ---------- */
+
+.settings-section {
+  margin-bottom: var(--space-xl);
+}
+
+.settings-section-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.settings-section-desc {
+  color: var(--color-muted);
+  margin-bottom: var(--space-md);
+  max-width: 60ch;
+}
+
+.lang-option-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-width: 480px;
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-height: 56px;
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease-out-expo), background-color 0.15s var(--ease-out-expo);
+}
+
+.lang-option:hover {
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+}
+
+.lang-option:has(input:checked) {
+  border-color: var(--color-primary);
+  background: color-mix(in oklch, var(--color-primary) 6%, var(--color-bg));
+}
+
+.lang-option:has(input:focus-visible) {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.lang-option input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.lang-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lang-option-label {
+  font-weight: 600;
+}
+
+.lang-option-hint {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.lang-option-hint:empty {
+  display: none;
+}
+
+/* Read-only fact panel — business info, about. Same bordered-row rhythm
+   as .lang-option / .home-row, just non-interactive. */
+.info-panel {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  max-width: 480px;
+  overflow: hidden;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-md);
+  padding: var(--space-md);
+}
+
+.info-row + .info-row {
+  border-top: 1px solid var(--color-border);
+}
+
+.info-label {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.info-value {
+  font-weight: 500;
+  text-align: right;
+}
+
+.info-link {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.info-link:hover {
+  text-decoration: underline;
+}
+
+/* Backups section */
+
+.backup-summary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.backup-summary-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-xs);
+}
+
+.backup-summary-label {
+  font-weight: 600;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.backup-summary-value {
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  color: var(--color-ink);
+}
+
+.backup-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.backup-row + .backup-row {
+  border-top: 1px solid var(--color-border);
+}
+
+.backup-row-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.backup-row-date {
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.backup-row-size {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+/* Toggle row — same label-wraps-input idiom as .lang-option, for a
+   single on/off setting (dark mode). */
+.switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  min-height: 64px;
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  max-width: 480px;
+  cursor: pointer;
+}
+
+.switch-row-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.switch-row-label {
+  font-weight: 600;
+}
+
+.switch-row-hint {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.switch {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 48px;
+  height: 28px;
+}
+
+.switch input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  /* Sits after track/thumb in the DOM for the ~ sibling selectors below,
+     which would otherwise paint on top and swallow clicks. */
+  z-index: 1;
+}
+
+.switch-track {
+  position: absolute;
+  inset: 0;
+  background: var(--color-border);
+  border-radius: 999px;
+  transition: background-color 0.15s var(--ease-out-expo);
+}
+
+.switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s var(--ease-out-expo);
+}
+
+.switch input:checked ~ .switch-track {
+  background: var(--color-primary);
+}
+
+.switch input:checked ~ .switch-thumb {
+  transform: translateX(20px);
+}
+
+.switch input:focus-visible ~ .switch-track {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switch-track,
+  .switch-thumb {
+    transition: none;
+  }
+}
+
+/* Plain form checkbox — for a single in-dialog choice (is this part
+   remanufactured, was the core returned), distinct from the pill .switch
+   above which is reserved for a standalone settings toggle. */
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-height: 44px;
+  margin-bottom: var(--space-md);
+  cursor: pointer;
+}
+
+.checkbox-field input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.checkbox-field-label {
+  font-size: 0.9375rem;
+  color: var(--color-ink);
+}
+
+/* Sale total summary line, shown live in the sale dialog. */
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-md);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+}
+
+.total-line-label {
+  font-weight: 600;
+}
+
+.total-line-value {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 1.0625rem;
+}
+
+.total-line-note {
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+  margin-top: -6px;
+  margin-bottom: var(--space-md);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-height: 40px;
+  padding: 0 var(--space-md);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 0.15s var(--ease-out-expo), border-color 0.15s var(--ease-out-expo), color 0.15s var(--ease-out-expo);
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-on-fill);
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-deep);
+}
+
+.btn-primary:disabled {
+  background: var(--color-border);
+  color: var(--color-muted);
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-ink);
+}
+
+.btn-ghost:hover {
+  border-color: var(--color-muted);
+  background: var(--color-surface);
+}
+
+.btn-danger-ghost {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-danger);
+}
+
+.btn-danger-ghost:hover {
+  border-color: var(--color-danger);
+  background: var(--color-surface);
+}
+
+.btn-danger {
+  background: var(--color-danger);
+  color: var(--color-on-fill);
+}
+
+.btn-danger:hover {
+  filter: brightness(0.9);
+}
+
+.btn-sm {
+  min-height: 44px;
+  padding: 0 var(--space-md);
+}
+
+/* ---------- Fields ---------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.field-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+}
+
+.field-row {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.field-row .field {
+  flex: 1;
+  min-width: 0;
+}
+
+.input,
+.select {
+  height: 40px;
+  padding: 0 var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-size: 1rem;
+}
+
+.input::placeholder {
+  color: var(--color-muted);
+  opacity: 1;
+}
+
+.input:focus-visible,
+.select:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+  border-color: var(--color-accent);
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.field-error {
+  font-size: 0.8125rem;
+  color: var(--color-danger);
+  display: none;
+}
+
+.field-error:not(:empty) {
+  display: block;
+}
+
+.search-field {
+  position: relative;
+  max-width: 420px;
+}
+
+/* ---------- Banner ---------- */
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-md);
+  font-size: 0.9375rem;
+}
+
+.banner-danger {
+  background: color-mix(in oklch, var(--color-danger) 12%, var(--color-bg));
+  color: var(--color-danger-ink);
+  border: 1px solid color-mix(in oklch, var(--color-danger) 30%, var(--color-bg));
+}
+
+/* ---------- Table ---------- */
+
+.table-wrap {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: var(--color-bg);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead th {
+  text-align: left;
+  background: var(--color-accent);
+  color: var(--color-on-fill);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: var(--space-sm) var(--space-md);
+}
+
+.table th.num,
+.table td.num {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.9375rem;
+}
+
+/* Mono, but left-aligned — for codes/identifiers (OE numbers, chassis
+   codes), not the right-aligned money/stock figures .num is for. */
+.table th.code,
+.table td.code {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.9375rem;
+}
+
+.table th.actions,
+.table td.actions {
+  text-align: right;
+}
+
+.table tbody tr {
+  border-top: 1px solid var(--color-border);
+}
+
+.table tbody tr:nth-child(even) {
+  background: var(--color-surface);
+}
+
+.table tbody tr:hover {
+  background: color-mix(in oklch, var(--color-primary) 8%, var(--color-bg));
+}
+
+.table td {
+  padding: var(--space-sm) var(--space-md);
+  color: var(--color-ink);
+}
+
+.table td.muted {
+  color: var(--color-muted);
+}
+
+.row-actions {
+  display: inline-flex;
+  gap: var(--space-xs);
+}
+
+/* Status pills */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-on-fill);
+  white-space: nowrap;
+}
+
+.pill-success {
+  background: var(--color-success);
+}
+
+.pill-danger {
+  background: var(--color-danger);
+}
+
+/* Remanufactured badge — navy, not orange or the status colors, so it
+   never reads as a stock-urgency signal. Reuses .pill's filled/white-text
+   base per the Filled-Status Rule. */
+.pill-remanufactured {
+  background: var(--color-accent);
+  margin-left: var(--space-xs);
+}
+
+/* Vehicle-type tag — quiet and outlined, a category label, not a status.
+   Deliberately lower-contrast than .pill so it never competes with the
+   stock-status or core-status pills on the same row. */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px var(--space-xs);
+  margin-left: var(--space-xs);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+/* Loading skeleton */
+
+.skeleton-row td {
+  padding: var(--space-md);
+}
+
+.skeleton-bar {
+  height: 14px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  animation: skeleton-pulse 1.3s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-bar {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
+/* Empty state */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl) var(--space-lg);
+  color: var(--color-muted);
+}
+
+.empty-state-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+/* Responsive table -> stacked cards */
+
+@media (max-width: 720px) {
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tbody tr {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .table tbody tr:nth-child(even) {
+    background: var(--color-bg);
+  }
+
+  .table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-xs) 0;
+    border: none;
+  }
+
+  .table td.actions {
+    justify-content: flex-end;
+    padding-top: var(--space-sm);
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    flex-shrink: 0;
+  }
+
+  .table td.actions::before {
+    content: none;
+  }
+}
+
+/* ---------- Dialog ---------- */
+
+dialog.dialog {
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 0;
+  width: min(520px, calc(100vw - var(--space-lg) * 2));
+  background: var(--color-bg);
+  box-shadow: var(--shadow-modal);
+  color: var(--color-ink);
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.2s var(--ease-out-expo), transform 0.2s var(--ease-out-expo), overlay 0.2s allow-discrete, display 0.2s allow-discrete;
+}
+
+dialog.dialog::backdrop {
+  background: rgba(15, 20, 30, 0.45);
+}
+
+@starting-style {
+  dialog.dialog[open] {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog.dialog {
+    transition: none;
+  }
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dialog-header h2 {
+  font-size: 1.125rem;
+}
+
+.dialog-close {
+  background: transparent;
+  border: none;
+  color: var(--color-muted);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+}
+
+.dialog-close:hover {
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.dialog-body {
+  padding: var(--space-lg);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+/* ---------- Toast ---------- */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: var(--space-lg);
+  transform: translate(-50%, 0);
+  min-width: 220px;
+  max-width: calc(100vw - var(--space-lg) * 2);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  background: var(--color-ink);
+  color: var(--color-bg);
+  font-size: 0.9375rem;
+  text-align: center;
+  box-shadow: var(--shadow-modal);
+  z-index: var(--z-toast);
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-out-expo), transform 0.2s var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -8px);
+}
+
+.toast.is-danger {
+  background: var(--color-danger);
+}
+
+.toast.is-success {
+  background: var(--color-success);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    transition: opacity 0.15s linear;
+  }
+
+  .toast.is-visible {
+    transform: translate(-50%, 0);
+  }
+}
+
+/* ---------- Reports ---------- */
+
+.range-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: flex-end;
+  margin-bottom: var(--space-lg);
+}
+
+.range-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.range-preset-btn {
+  min-height: 40px;
+  padding: 0 var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 0.15s var(--ease-out-expo), border-color 0.15s var(--ease-out-expo), color 0.15s var(--ease-out-expo);
+}
+
+.range-preset-btn:hover {
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+}
+
+.range-preset-btn[aria-pressed="true"] {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-fill);
+}
+
+.range-preset-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+.custom-range {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.custom-range .field {
+  margin-bottom: 0;
+}
+
+/* Summary stat cards */
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.stat-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  background: var(--color-bg);
+}
+
+.stat-card-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.stat-card-value {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--color-ink);
+  line-height: 1.2;
+}
+
+.stat-card-sub {
+  margin-top: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+.stat-card.is-positive .stat-card-value {
+  color: var(--color-success);
+}
+
+.stat-card.is-negative .stat-card-value {
+  color: var(--color-danger);
+}
+
+/* Top-selling / low-stock list panels */
+
+.report-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-lg);
+}
+
+.report-panel {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  background: var(--color-bg);
+}
+
+.report-panel-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.report-panel-desc {
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+  margin-bottom: var(--space-md);
+}
+
+.report-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+}
+
+.report-row + .report-row {
+  border-top: 1px solid var(--color-border);
+}
+
+.report-row-name {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  min-width: 0;
+  color: var(--color-ink);
+}
+
+.report-row-rank {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+.report-row-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.report-row-value {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.9375rem;
+}
+
+.report-empty {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  padding: var(--space-sm) 0;
+}

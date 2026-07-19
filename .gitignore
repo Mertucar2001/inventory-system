@@ -1,0 +1,18 @@
+# Python
+backend/venv/
+__pycache__/
+*.pyc
+
+# Database
+*.db
+backend/yedekler/
+
+# Logs
+*.log
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Scratch / skill working directories (not part of the project)
+.impeccable/
+temp-impeccable/

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+    (function () {
+        try {
+            if (localStorage.getItem("als-theme") === "dark") {
+                document.documentElement.setAttribute("data-theme", "dark");
+            }
+        } catch (e) {}
+    })();
+    </script>
+    <meta name="i18n-title" content="settings.docTitle">
+    <title>Ayarlar - Mertory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="css/design.css" rel="stylesheet">
+</head>
+<body>
+
+    <a href="#main" class="skip-link" data-i18n="skip.link">İçeriğe geç</a>
+
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a href="index.html" class="brand">
+                <svg class="brand-mark" width="36" height="26" viewBox="0 0 36 26" aria-hidden="true">
+                    <ellipse class="brand-mark-oval" cx="18" cy="13" rx="16" ry="11"></ellipse>
+                    <text class="brand-mark-text" x="18" y="17" text-anchor="middle">M</text>
+                </svg>
+                Mertory
+            </a>
+            <nav class="site-nav" aria-label="Ana gezinme">
+                <a href="index.html" data-i18n="nav.home">Ana Sayfa</a>
+                <a href="parts.html" data-i18n="nav.parts">Parçalar</a>
+                <a href="sales.html" data-i18n="nav.sales">Satışlar</a>
+                <a href="customers.html" data-i18n="nav.customers">Müşteriler</a>
+                <a href="reports.html" data-i18n="nav.reports">Raporlar</a>
+                <a href="settings.html" aria-current="page" data-i18n="nav.settings">Ayarlar</a>
+            </nav>
+            <div class="lang-switch">
+                <button type="button" class="lang-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu" aria-label="Dil / Language / Sprache">
+                    <span class="lang-trigger-label">TR</span>
+                    <svg class="lang-trigger-caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
+                        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div id="langMenu" class="lang-menu" aria-label="Dil / Language / Sprache">
+                    <button type="button" class="lang-menu-item" data-lang-option="tr" aria-current="true">
+                        <span>Türkçe</span>
+                        <svg class="lang-menu-check" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                            <path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button type="button" class="lang-menu-item" data-lang-option="en">
+                        <span>English</span>
+                        <svg class="lang-menu-check" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                            <path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button type="button" class="lang-menu-item" data-lang-option="de">
+                        <span>Deutsch</span>
+                        <svg class="lang-menu-check" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                            <path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" class="page">
+        <div class="page-header">
+            <h1 class="page-title" data-i18n="settings.title">Ayarlar</h1>
+        </div>
+
+        <section class="settings-section">
+            <h2 class="settings-section-title" id="languageSectionTitle" data-i18n="settings.languageTitle">Dil</h2>
+            <p class="settings-section-desc" data-i18n="settings.languageBody">Uygulamanın dilini seç. Seçimin bu cihazda hatırlanır.</p>
+
+            <div class="lang-option-list" role="radiogroup" aria-labelledby="languageSectionTitle">
+                <label class="lang-option">
+                    <input type="radio" name="settingsLang" data-lang-option="tr" checked>
+                    <span class="lang-option-text">
+                        <span class="lang-option-label">Türkçe</span>
+                        <span class="lang-option-hint" data-i18n="settings.lang.trHint">Varsayılan dil</span>
+                    </span>
+                </label>
+                <label class="lang-option">
+                    <input type="radio" name="settingsLang" data-lang-option="en">
+                    <span class="lang-option-text">
+                        <span class="lang-option-label">English</span>
+                        <span class="lang-option-hint" data-i18n="settings.lang.enHint"></span>
+                    </span>
+                </label>
+                <label class="lang-option">
+                    <input type="radio" name="settingsLang" data-lang-option="de">
+                    <span class="lang-option-text">
+                        <span class="lang-option-label">Deutsch</span>
+                        <span class="lang-option-hint" data-i18n="settings.lang.deHint">Berlin'deki çoğu müşteri için</span>
+                    </span>
+                </label>
+            </div>
+        </section>
+
+        <section class="settings-section">
+            <h2 class="settings-section-title" data-i18n="settings.darkMode.title">Görünüm</h2>
+
+            <label class="switch-row">
+                <span class="switch-row-text">
+                    <span class="switch-row-label" data-i18n="settings.darkMode.label">Karanlık Mod</span>
+                    <span class="switch-row-hint" data-i18n="settings.darkMode.hint">Koyu renkli arka plan kullan. Seçimin bu cihazda hatırlanır.</span>
+                </span>
+                <span class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="switch-track"></span>
+                    <span class="switch-thumb"></span>
+                </span>
+            </label>
+        </section>
+
+        <section class="settings-section">
+            <h2 class="settings-section-title" data-i18n="settings.business.title">İşletme Bilgileri</h2>
+
+            <div class="info-panel">
+                <div class="info-row">
+                    <span class="info-label" data-i18n="settings.business.name">İşletme Adı</span>
+                    <span class="info-value">Mertory</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label" data-i18n="settings.business.address">Adres</span>
+                    <span class="info-value">Musterstraße 12, 10115 Berlin</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label" data-i18n="settings.business.phone">Telefon</span>
+                    <a class="info-value info-link" href="tel:+493012345678">+49 30 12345678</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="settings-section">
+            <h2 class="settings-section-title" data-i18n="settings.data.title">Veri ve Yedekleme</h2>
+            <p class="settings-section-desc" data-i18n="settings.data.body">Tüm parça, satış ve müşteri kayıtlarını CSV dosyaları olarak indir.</p>
+            <button type="button" class="btn btn-primary" id="exportDataBtn" data-i18n="settings.data.exportBtn">Verileri Dışa Aktar</button>
+        </section>
+
+        <section class="settings-section">
+            <h2 class="settings-section-title" data-i18n="settings.backups.title">Yedekler</h2>
+            <p class="settings-section-desc" data-i18n="settings.backups.body">Veritabanının yedeği. Uygulama her açıldığında günde bir kez, otomatik olarak yedek alınır.</p>
+
+            <div class="backup-summary">
+                <span class="backup-summary-text">
+                    <span class="backup-summary-label" data-i18n="settings.backups.lastLabel">Son yedek:</span>
+                    <span class="backup-summary-value" id="lastBackupValue">—</span>
+                </span>
+                <button type="button" class="btn btn-primary" id="backupNowBtn" data-i18n="settings.backups.nowBtn">Şimdi Yedekle</button>
+            </div>
+
+            <div class="info-panel" id="backupListPanel"></div>
+        </section>
+
+        <section class="settings-section">
+            <h2 class="settings-section-title" data-i18n="settings.about.title">Hakkında</h2>
+
+            <div class="info-panel">
+                <div class="info-row">
+                    <span class="info-value" data-i18n="settings.about.appName">Mertory — Atölye Yönetim Sistemi</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label" data-i18n="settings.about.versionLabel">Versiyon</span>
+                    <span class="info-value">1.0.0</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>
