@@ -25,6 +25,18 @@ Mertory tracks parts stock, sales, and customer records as one linked system —
 - Light/dark theme toggle
 - Trilingual UI (Turkish default, English, German) with per-device language memory
 
+## Screenshots
+
+| Reports | Home (dark mode) |
+|---|---|
+| ![Reports page showing sales totals and pending cores](screenshots/reports.jpeg) | ![Home page with quick links to parts, sales, and customers](screenshots/home-dark.jpeg) |
+
+| Add a Part | Settings |
+|---|---|
+| ![New part dialog with vehicle type and pricing fields](screenshots/new-part-dialog.jpeg) | ![Settings page with language and dark mode options](screenshots/settings.jpeg) |
+
+*Shown across different languages and themes to demonstrate the trilingual UI (Turkish/English/German) and light/dark modes.*
+
 ## Getting Started
 
 ```bash

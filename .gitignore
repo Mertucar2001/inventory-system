@@ -11,7 +11,8 @@ backend/yedekler/
 *.log
 
 # Claude Code local settings
-.claude/settings.local.json
+.claude/
+CLAUDE.md
 
 # Scratch / skill working directories (not part of the project)
 .impeccable/

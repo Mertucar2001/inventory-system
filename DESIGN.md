@@ -1,5 +1,3 @@
-<!-- Implemented across all 4 pages (index, parts, sales, customers) in frontend/css/design.css. Primary/primary-deep were darkened post-launch (2026-07-18) to fix a WCAG AA contrast failure caught by /impeccable audit — see Colors section. Components below were proposed defaults at seed time and now largely match the real build; re-run /impeccable document for a full re-extraction if they drift further. -->
-
 ---
 name: Mertory
 description: Anlasser & Lichtmaschinen (starters & alternators) — a parts-counter tool for the workshop, stock, sales, and customers, kept plain and fast.
